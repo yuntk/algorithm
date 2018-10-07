@@ -34,7 +34,7 @@ bool set(int y, int x, int type, std::vector< std::vector<char> >& board, char m
         } else return false;
     } else {
         //marking the board with '.'
-        //check fo debug
+        //check for debug
         int error = -1;
         for(int i = 0; i < 3; i++){
             int posy = y+coverType[type][i][0];
@@ -58,7 +58,7 @@ bool set(int y, int x, int type, std::vector< std::vector<char> >& board, char m
 }
 
 int cover(std::vector< std::vector<char> >& board ) {
-    //search first  most left-upper pos
+    //search first  most left-upper position
     int y = -1, x = -1;
     for(int i = 0; i < board.size(); i++){
         for(int j = 0; j < board[0].size(); j++){
@@ -103,7 +103,7 @@ int main(){
             }
         }
 
-        //board is full or the number of '.' is not a multiple of three
+        //check the board is full or the number of '.' is not a multiple of three
         int count = 0;
         for(int i = 0; i < row; i++){
             for(int j = 0; j < col; j++){
@@ -118,6 +118,6 @@ int main(){
         //execution
         std::cout << cover(board) << std::endl;
 
-    }//end excution case
+    }//end of each excution case
     
 }
