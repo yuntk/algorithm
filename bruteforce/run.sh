@@ -1,27 +1,9 @@
 #!/bin/bash
 
-declare TESTCASE="4
-3 2
-..
-..
-..
-3 7
-#.....#
-#.....#
-##...##
-3 7
-#.....#
-#.....#
-##..###
-8 10
-##########
-#.........
-..........
-#........#
-#........#
-#........#
-#........#
-##########
+#TODO Testcase have to be loaded from file
+declare TESTCASE="2
+12 6 6 6 6 6 12 12 12 12 12 12 12 12 12 12
+12 9 3 12 6 6 9 3 12 9 12 9 12 12 6 6
 "
 
 usage() {
@@ -36,7 +18,7 @@ while getopts ":c:r:a:" opt; do
   case $opt in
     c)
       echo "Compile $OPTARG"
-      g++ -o $OPTARG.out $OPTARG
+      g++ -g -o a.out $OPTARG
       ;;
     r)
       echo "Run $OPTARG with $TESTCASE"
