@@ -1,43 +1,39 @@
 #!/bin/bash
 
-#TODO Testcase have to be loaded from file
-declare TESTCASE="2
-12 6 6 6 6 6 12 12 12 12 12 12 12 12 12 12
-12 9 3 12 6 6 9 3 12 9 12 9 12 12 6 6
-"
-
-usage() {
-echo "  -c file : compile
-  -r file : run file with TESTCASE
-  -a file : compile and run
-  ex)$0 -a boardcover.cpp : compile boardcover.cpp and excute with TESTCASE" 1>&2;
-  exit 0;
+# Usage:
+# If you run this script without argument,
+# It will compile a latest file ended with .cc or .cpp.
+# Then the compile is finished without an error, run the result with the [latest file name].txt
+# Also you can choice the file which compile and run by passing filename as first argument
+# 
+function compileAndRun(){
+    local filename=$1
+    echo "Compile $filename"
+    g++ -o ${filename%.*}.tmp $filename
+    echo "Run $filename with ${filename%.*}.txt"
+    echo "---------------------------------------"
+    cat ./${filename%.*}.txt | ./${filename%.*}.tmp
+    echo "---------------------------------------"
+    rm ${filename%.*}.tmp
 }
 
-while getopts ":c:r:a:" opt; do
-  case $opt in
-    c)
-      echo "Compile $OPTARG"
-      g++ -g -o a.out $OPTARG
-      ;;
-    r)
-      echo "Run $OPTARG with $TESTCASE"
-      echo "---------------------------------------"
-      echo $TESTCASE | ./$OPTARG
-      ;;
-    a)
-      echo "Compile $OPTARG"
-      g++ -o $OPTARG.tmp $OPTARG
-      echo "Run $OPTARG with $TESTCASE"
-      echo "---------------------------------------"
-      echo $TESTCASE | ./$OPTARG.tmp
-      echo
-      rm $OPTARG.tmp
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument."
-      ;;
-    *)
-      usage
-  esac
-done
+if [ "$1" = "" ]
+then
+    #Find latest file ending with .cc or .cpp extension
+    for filename in $( ls -At ) 
+    do
+        if [[ $filename == *.cc || $filename == *.cpp ]]
+        then
+            compileAndRun $filename
+            break
+        fi
+    done
+else 
+    if [[ -r $1  && ($1 == *.cc || $1 == *.cpp) ]]
+    then
+        compileAndRun $1
+    else
+        echo "$1 isn't a right file format or doesn't exist"
+    fi
+fi
+

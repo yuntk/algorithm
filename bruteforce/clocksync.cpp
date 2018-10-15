@@ -42,7 +42,7 @@ int TryAllCase(int* clocks, int switch_number) {
     }
     int min_rotation = kFail;
     for (switch_number; switch_number < kSwitch; switch_number++) {
-        for (int k = 0; k < 4; ++k) {
+        for (int k = 0; k < 4; k++) {
             min_rotation = std::min(min_rotation , k+TryAllCase(clocks, switch_number+1));
             PushSwitch(clocks, switch_number);
         }
