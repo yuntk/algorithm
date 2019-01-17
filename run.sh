@@ -11,7 +11,7 @@
 function compileAndRun(){
     local filename=$1
     echo "Compile $filename"
-    g++ -o ${filename%.*}.tmp $filename
+    g++ -std=c++14 -o ${filename%.*}.tmp $filename
     echo "Run $filename with ${filename%.*}.txt"
     echo "---------------------------------------"
     cat ./${filename%.*}.txt | ./${filename%.*}.tmp
